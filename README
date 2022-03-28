@@ -1,0 +1,62 @@
+//Toma Bogdan-Nicolae 313CB
+//SD TEMA 3
+
+/*  Prima data deschidem fisierele de intrare/iersire si initializam arborii Trie.
+  Structura Trie contine:
+  -68(numarul simbolurilor din alfabetul dat) de pointeri de tipul Trie
+  -un intreg care memoreaza daca nodul este "frunza" sau nu(leaf)
+  -un void* care retine informatia nodurilor "frunze"(info, care este o carte sau un alt arbore
+  Trie
+  Fiecare litera a alfabetului dat corespunde cu un numar de la 0 la 67 (a = 0, b = 1, A= 27,...),iar
+ daca un nod nu este initializat sau este egal cu NULL, inseamna ca litera respectiva nu exista.
+  
+  Citim linie cu linie din input, memoram comanda, iar in functie de aceasta executam functiile
+ cerute.
+ 
+	FUNCTIA ADD_BOOK:
+  Cream o variabila de tipul TBook(structura este aceeasi cu ce se cere in pdf), pe care o initializam
+ cu functia create_book si o inseram atat in arborele cartilor cat si in cel al autorilor.
+  Prin functia get_index gasim pozitia in alfabet a unei litere. Astfel, retinem in index pozitia,iar
+ incerementarea va arata precum node = node->childre[index]. Daca litera nu exista inainte o initilizam
+ cu functia getNode, care aloca spatiu pentru nod si initializeaza cu NULL copiii sai.
+  Pentru a insera in arborele autorilor, parcurgem aceeasi pasi, iar in plus cream o copie a cartii
+ pentru a nu exista un double free la dezalocare. De asemenea, verificam daca arborele autorului era
+ deja alocat, caz in care doar inseram copia cartii in el, daca nu, il cream cu functia getnode.
+ 
+	FUNCTIA SEARCH_BOOK:
+  Analizam litera cu litera, precum la inserare, iar daca intalnim un nod NULL, inseamna ca nu exista
+ cartea in recomandari. Daca se ajunge la finalul for-ului se verifica daca nodul este "frunza", in 
+ acest caz printam informatiile cartii, in caz contrar, cartea nu se afla in recomandari.
+
+	FUNCTIA SEARCH_BOOK~:
+  Parcugem prefixul ca mai sus, apoi apelam functia show_books_pref, care parcurge restul nodurilor
+ arborelui recursiv, in ordine lexicografica, iar daca intalneste o "frunza" printeaza titlul si 
+ incrementeaza numarul de carti afisate.
+ 
+ 	FUNCTIA LIST_AUTHOR:
+  Parcurgem arborele autorilor, iar daca gaseste autorul dorit apeleaza functia show_books, care
+ functioneaza similar cu show_books_preaf, doar ca nu se opreste la 3 carti.
+
+	FUNCTIA LIST_AUTHOR~:
+  Parcurgem prefixul dupa care apelam show_author_pref, similara cu show_books_pref, doar ca nu 
+ stocam informatia autorului in info, astfel trebuie sa apelam inca o functie( print_authors) care
+ parcurge arborele specific autorului dat pana la intalnirea unei carti, careia ii printeaza autorul.
+ (functia search_by_author author~ este identica cu aceasta)
+ 
+	FUNCTIA SEARCH_BY_AUTHOR:
+  Se parcurge autorul, ajungandu-se in arborele acestuia, apoi apelam functia search_book. Similar
+ este si SEARCH_BY_AUTHOR_PREF, doar ca se apeleaza functia search_book_pref.
+ 
+	FUNCTIA DELETE:
+  In primul rand se cauta titlul in arborele cartilor, iar daca exista se face stergerea.
+  Se apeleaza recursiv functia cu key + 1(adica fara prima litera). Daca se ajunge la o frunza dorita
+ se dezaloca memoria cartii(sau doar nodul respectiv daca eliminam un autor).Cu ajutorul functiei 
+ count_children, care numara copiii unui nod, vedem daca nodul respectiv trebuie eliberat, sau in
+ cazul in care mai are copii, trebuie facut leaf = 0. Dupa ce nodul frunza a fost sters se revine la
+ celelalte noduri ale key-ului, carora se aplica acelasi algoritm in afara de eliberarea informatiei.
+  Tot cu functia count_children numaram copiii radacinii arborelui unui autor. Daca sunt 0, stergem
+ autorul.
+ 
+ 										Punctaj checker: 135/135
+										bonus: 20/20
+*/ 
